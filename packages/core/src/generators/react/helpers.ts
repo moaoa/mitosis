@@ -3,6 +3,7 @@ import { MitosisNode } from '../../types/mitosis-node';
 import { stripStateAndPropsRefs } from '../../helpers/strip-state-and-props-refs';
 
 import { ToReactOptions } from './types';
+import { filterChildren } from 'src/parsers/svelte/helpers/children';
 
 export const processBinding = (str: string, options: ToReactOptions) => {
   if (options.stateType !== 'useState') {
@@ -21,4 +22,4 @@ export function getFragment(type: 'open' | 'close', options: ToReactOptions) {
   const tagName = options.preact ? 'Fragment' : '';
   return type === 'open' ? `<${tagName}>` : `</${tagName}>`;
 }
-export const wrapInFragment = (json: MitosisComponent | MitosisNode) => json.children.length !== 1;
+export const wrapInFragment = (json: MitosisComponent | MitosisNode) => filterChildren(json.children).length !== 1;
